@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{{ url_for('static', filename = 'style.css') }}" rel="stylesheet" />
+    <title>Carros</title>
+</head>
+<body>
+    <div class="center">
+        <a href="/">Voltar</a>
+    </div>
+
+    <div class="center" style="height: 50px;">
+        <form action="{{ dados[0] }}" method="POST">
+            <select {{ dados[2] }} name="cpf" id="cpf" required>
+                {% for pessoa in tabelas[0] %}
+                <option value="{{ pessoa[0] }}">{{ pessoa[1] }}</option>
+                {% endfor %}
+            </select>
+            <input type="text" name="name" id="name" placeholder="Nome" minlength="3" maxlength="40" required value="{{ dados[3] }}">
+            <select name="cor" id="cor" required>
+                {% for cor in tabelas[1] %}
+                <option {{ cor[2] }} value="{{ cor[0] }}">{{ cor[1] }}</option>
+                {% endfor %}
+            </select>
+            <select name="tipo" id="tipo" required>
+                {% for tipo in tabelas[2] %}
+                <option {{ tipo[2] }} value="{{ tipo[0] }}">{{ tipo[1] }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit">{{ dados[1] }}</button>
+        </form>
+    </div>
+
+    <div>
+        {% for carro in content %}
+        <div class="center linha_consulta">
+            <p class="center">Nome: {{ carro[1] }}</p>
+            <p class="center">Cor: {{ carro[2] }}</p>
+            <p class="center">Tipo: {{ carro[3] }}</p>
+            <p class="center">Dono Cpf: {{ carro[4] }}</p>
+            <p class="center">Dono Nome: {{ carro[5] }}</p>
+            <a class="center" href="./?id={{ carro[0] }}&cpf={{ carro[4] }}">Editar</a>
+            <a class="center" href="./delete/?id={{ carro[0] }}&cpf={{ carro[4] }}">Deletar</a>
+        </div>
+        {% endfor %}
+    </div>
+
+    <script src="{{ url_for('static', filename = 'script.js') }}"></script>
+</body>
+</html>
